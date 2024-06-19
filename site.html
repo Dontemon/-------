@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Менеджер Паролей</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .form {
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 500px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input, button {
+            margin: 5px 0;
+            width: 100%;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <h1>Менеджер Паролей</h1>
+        <form id="password-form">
+            <input id="login" type="text" placeholder="Логин" required>
+            <input id="password" type="password" placeholder="Пароль" required>
+            <input id="url" type="url" placeholder="URL" required>
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+</body>
+</html>
