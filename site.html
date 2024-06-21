@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,6 +20,18 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
+        a{
+            text-decoration: none;
+            color: #ffcc00;
+        }
+        a:visited{
+            text-decoration: none;
+            color: #ffcc00;
+        }
+        a:active{
+            text-decoration: none;
+            color: #967803;
+        }
         h1 {
             text-align: center;
             color: #ffcc00;
@@ -27,7 +40,7 @@
             margin-bottom: 20px;
         }
         input, button {
-            width: 100%;
+            width: 97%;
             padding: 10px;
             margin: 5px 0;
             border: 1px solid #ffcc00;
@@ -47,11 +60,39 @@
         button:hover {
             background: #e6b800;
         }
+        .password-list {
+            list-style: none;
+            padding: 0;
+        }
+        .password-item {
+            background: #444;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ffcc00;
+        }
+        .password-item strong {
+            color: #ffcc00;
+        }
+        .password-item button {
+            margin-top: 10px;
+            background: #ffcc00;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .password-item button:hover {
+            background: #e6b800;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Менеджер Паролей</h1>
+        <a href="">aaaa</a>
         <form id="password-form">
             <input type="text" id="login" placeholder="Логин" required>
             <input type="password" id="password" placeholder="Пароль" required>
@@ -61,5 +102,54 @@
         <ul id="password-list" class="password-list"></ul>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const passwordForm = document.getElementById('password-form');
+            const passwordList = document.getElementById('password-list');
+
+            // Загрузка паролей из localStorage
+            const savedPasswords = JSON.parse(localStorage.getItem('passwords')) || [];
+
+            const renderPasswords = () => {
+                passwordList.innerHTML = '';
+                savedPasswords.forEach((item, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'password-item';
+                    listItem.innerHTML = `
+                        <strong>Логин:</strong> ${item.login} <br>
+                        <strong>Пароль:</strong> ${item.password} <br>
+                        <strong>URL:</strong> <a href="${item.url}" target="_blank">${item.url}</a> <br>
+                        <button onclick="deletePassword(${index})">Удалить</button>
+                    `;
+                    passwordList.appendChild(listItem);
+                });
+            };
+
+            window.deletePassword = (index) => {
+                savedPasswords.splice(index, 1);
+                localStorage.setItem('passwords', JSON.stringify(savedPasswords));
+                renderPasswords();
+            };
+
+            passwordForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const login = document.getElementById('login').value;
+                const password = document.getElementById('password').value;
+                const url = document.getElementById('url').value;
+
+                savedPasswords.push({ login, password, url });
+                localStorage.setItem('passwords', JSON.stringify(savedPasswords));
+
+                document.getElementById('login').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('url').value = '';
+
+                renderPasswords();
+            });
+
+            renderPasswords();
+        });
+    </script>
 </body>
 </html>
